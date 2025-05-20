@@ -16,12 +16,11 @@ This project uses machine learning to predict a person's seasonal color type (Sp
 
 ## 🛠 Tech Stack
 
-- **Frontend:** HTML / CSS / JavaScript (or React, if applicable)
+- **Frontend:** React js
 - **Backend:** Python + Flask
 - **Model:** Random Forest Classifier (`random_forest_model.pkl`)
 - **Other Libraries:** `scikit-learn`, `numpy`, `pandas`, `opencv-python` (for image processing)
 
 ---
 
-## 📂 Project Structure
 
