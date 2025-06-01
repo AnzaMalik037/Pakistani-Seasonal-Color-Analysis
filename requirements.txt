@@ -1,5 +1,8 @@
-fastapi
-uvicorn
-langchain
-transformers
-sentence-transformers
+flask
+flask-cors
+numpy
+joblib
+scikit-learn
+opencv-python
+mtcnn
+Pillow
