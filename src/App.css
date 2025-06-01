@@ -1,0 +1,123 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #F7F8F3; 
+  color: #012C3D;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  margin-top: 5px;
+}
+
+
+h1 {
+  color: #012C3D; 
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', Times, serif;
+}
+h2 {
+  color: #012C3D; 
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+p {
+  color: #012C3D; /* Dark Navy */
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+label, input{
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-left: 15px;
+}
+.button {
+  background-color: #F8444F; /* Vibrant Red */
+  color: #F7F8F3; /* Off-White text */
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+.button:hover {
+  background-color: #78BDC4; /* Soft Teal on hover */
+  transform: scale(1.05);
+}
+.input-file {
+  margin: 20px 0;
+}
+.input-file input[type="file"] {
+  display: none;
+}
+.input-file label {
+  background-color: #78BDC4; /* Soft Teal */
+  color: #F7F8F3; /* Off-White text */
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.input-file label:hover {
+  background-color: #F8444F; /* Vibrant Red on hover */
+  transform: scale(1.05);
+}
+
+
+.image-preview {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #78BDC4; /* Soft Teal border */
+}
+.AboutUs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  margin-top: 30px;
+  background-color: #78BDC4;
+}
+.result{
+  text-align: center;
+  padding: 20px;
+  margin-top: 5px;
+}
+
+
+.carousel {
+  width: 80%;
+  margin: 20px auto;
+  max-height: 350px;
+  overflow: hidden; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.carousel .carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 25px;
+  bottom: 20px; 
+}
+.carousel .carousel-caption h3 {
+  color: #F7F8F3;
+  font-size: 1.2rem;
+}
+.carousel img {
+  border-radius: 10px;
+}
