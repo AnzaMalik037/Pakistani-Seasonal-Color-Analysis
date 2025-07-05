@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { generatePDF } from './generatePDF';
 
 const UploadPage = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
-  const [veinColor, setVeinColor] = useState(''); 
+  const [veinColor, setVeinColor] = useState('');
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -21,15 +22,18 @@ const UploadPage = () => {
   };
 
   const handleGuideDownload = () => {
-    if (result && result.season_prediction && undertone) {
-      const undertonePrefix = undertone.split(" ")[0].toLowerCase(); 
-      const seasonFileName = result.season_prediction.toLowerCase(); 
-      const pdfFileName = `${undertonePrefix} ${seasonFileName}.pdf`; 
-      window.open(`/pdf/${pdfFileName}`, "_blank");
-    } else {
-      alert("No season prediction available.");
+    if (!result || !result.season_prediction || !undertone) {
+      alert('No season prediction or undertone available.');
+      return;
     }
-  };  
+
+    try {
+      generatePDF(result.season_prediction, undertone);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert(error.message);
+    }
+  };
 
   const handleVeinColorChange = (e) => {
     setVeinColor(e.target.value);
@@ -37,34 +41,34 @@ const UploadPage = () => {
 
   const handleSubmit = async () => {
     if (!file) {
-      alert("Please upload an image.");
+      alert('Please upload an image.');
       return;
     }
     if (!veinColor) {
-      alert("Please select your vein color.");
+      alert('Please select your vein color.');
       return;
     }
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("vein_color", veinColor); 
+    formData.append('file', file);
+    formData.append('vein_color', veinColor);
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/analyze", formData, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const response = await axios.post('http://127.0.0.1:5000/analyze', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
       setResult(response.data);
       setErrorMsg('');
     } catch (error) {
-      console.error("Error analyzing image:", error);
-      setErrorMsg("An error occurred during analysis.");
+      console.error('Error analyzing image:', error);
+      setErrorMsg('An error occurred during analysis.');
     }
   };
 
   // Compute undertone based on veinColor
   const undertone =
-    veinColor === "blue/purple" ? "Cool Undertone" :
-    veinColor === "green/olive" ? "Warm Undertone" :
-    veinColor === "mix" ? "Neutral Undertone" : "";
+    veinColor === 'blue/purple' ? 'Cool Undertone' :
+    veinColor === 'green/olive' ? 'Warm Undertone' :
+    veinColor === 'mix' ? 'Neutral Undertone' : '';
 
   return (
     <div className="body">
@@ -76,15 +80,15 @@ const UploadPage = () => {
         {imagePreview && (
           <div>
             <h3>Image Preview:</h3>
-            <img src={imagePreview} alt="Preview" style={{ maxWidth: "300px" }} />
+            <img src={imagePreview} alt="Preview" style={{ maxWidth: '300px' }} />
             <br />
-            <h5>Please select your vein color (to determine your undertone):</h5> 
+            <h5>Please select your vein color (to determine your undertone):</h5>
             <div onChange={handleVeinColorChange}>
-              <input type="radio" value="blue/purple" name="vein_color" id="blue-purple" /> 
+              <input type="radio" value="blue/purple" name="vein_color" id="blue-purple" />
               <label htmlFor="blue-purple">Blue/Purple</label>
-              <input type="radio" value="green/olive" name="vein_color" id="green-olive" /> 
+              <input type="radio" value="green/olive" name="vein_color" id="green-olive" />
               <label htmlFor="green-olive">Green/Olive</label>
-              <input type="radio" value="mix" name="vein_color" id="mix" /> 
+              <input type="radio" value="mix" name="vein_color" id="mix" />
               <label htmlFor="mix">Mix</label>
             </div>
           </div>
@@ -96,7 +100,7 @@ const UploadPage = () => {
             <button className="button" onClick={handleGuideDownload}>Get Complete Guide</button>
           </div>
         )}
-        {errorMsg && <div style={{ color: "red" }}>{errorMsg}</div>}
+        {errorMsg && <div style={{ color: 'red' }}>{errorMsg}</div>}
       </div>
     </div>
   );

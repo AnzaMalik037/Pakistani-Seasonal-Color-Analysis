@@ -8,9 +8,14 @@ from mtcnn import MTCNN
 from sklearn.cluster import KMeans
 from PIL import Image
 import io
+import pandas as pd
+import logging
 
 app = Flask(__name__)
 CORS(app)
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Load the RandomForest model
 model_filename = "random_forest_model.pkl"
@@ -41,13 +46,8 @@ def crop_region(image, center, size=20):
     y1, y2 = max(0, y - size), min(h, y + size)
     return image[y1:y2, x1:x2]
 
-
-
-
 def extract_features_from_image(image_bytes):
     """Extract facial features (colors and brightness) following the same procedure as in the test notebook."""
-    
-
     # Load image and convert to RGB NumPy array
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     img_np = np.array(image)
@@ -129,13 +129,16 @@ def analyze():
             "Skin Color_Brightness", "Lip color_Brightness"
         ]
         feature_vector = np.array([extracted_features[k] for k in feature_keys]).reshape(1, -1)
-        prediction = model.predict(feature_vector)[0]
+        # Convert to DataFrame to include feature names
+        feature_df = pd.DataFrame(feature_vector, columns=feature_keys)
+        prediction = model.predict(feature_df)[0]
 
         return jsonify({
-            "season_prediction": prediction,
+            "season_prediction": prediction.capitalize(),
             "extracted_features": extracted_features
         })
     except Exception as e:
+        app.logger.error(f"Error in /analyze: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':

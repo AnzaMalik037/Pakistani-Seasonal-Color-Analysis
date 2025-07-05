@@ -25,7 +25,6 @@ const HomePage = () => {
         <h3>BCS Comsats Wah 8th Semester Project</h3>
         <h6>
           Student: Anza Malik (FA21-BCS-037)
-          Romysa Siddiqui (FA21-BCS-069)
         </h6>
         <p>
           Big Thank you to every single one of the 100 people who participated in data collection 💌
