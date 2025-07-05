@@ -17,7 +17,7 @@ const UploadPage = () => {
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
-      reader.readAsDataURL(selectedFile);
+      reader.readAsDataURL(selectedFile); 
     }
   };
 
@@ -53,9 +53,10 @@ const UploadPage = () => {
     formData.append('vein_color', veinColor);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/analyze', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const response = await axios.post('https://anzamalik.pythonanywhere.com/analyze', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' }
+});
+
       setResult(response.data);
       setErrorMsg('');
     } catch (error) {
